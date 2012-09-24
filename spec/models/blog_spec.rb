@@ -50,5 +50,14 @@ describe Blog do
       @it.add_entry(middle)
       @it.entries.must_equal([newest, middle, oldest])
     end
+    it "is limited to 10 items" do
+      10.times do |i|
+        @it.add_entry(stub_entry_with_date("2011-09-#{i+1}"))
+      end
+      oldest = stub_entry_with_date("2011-08-30")
+      @it.add_entry(oldest)
+      @it.entries.size.must_equal 10
+      @it.entries.wont_include(oldest)
+    end
   end
 end

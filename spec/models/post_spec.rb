@@ -33,6 +33,7 @@ describe Post do
     before do
       @blog = MiniTest::Mock.new
       @it.blog = @blog
+      @it.title = "TITLE"
     end
     after do
       @blog.verify
@@ -41,8 +42,21 @@ describe Post do
       @blog.expect :add_entry, nil, [@it]
       @it.publish
     end
+    describe "given an invalid post" do
+      before do @it.title = nil end
+
+      it "won't add the post to the blog" do
+        dont_allow(@blog).add_entry(@it)
+        @it.publish
+      end
+
+      it "returns false" do
+        refute(@it.publish)
+      end
+    end
   end
   describe "#pubdate" do
+    before do @it.title = "TITLE" end
     describe "before publishing" do
       it "is blank" do
         @it.pubdate.must_be_nil

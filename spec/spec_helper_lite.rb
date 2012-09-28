@@ -1,4 +1,6 @@
+require "minitest/autorun"
 require "rr"
+require 'ostruct'
 
 class MiniTest::Unit::TestCase
   include RR::Adapters::MiniTest

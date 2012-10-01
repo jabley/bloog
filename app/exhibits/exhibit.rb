@@ -5,4 +5,12 @@ class Exhibit < SimpleDelegator
     @context = context
     super(model)
   end
+
+  def to_model
+    __get_obj__
+  end
+
+  def class
+    __get_obj__.class
+  end
 end

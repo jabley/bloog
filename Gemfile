@@ -40,4 +40,6 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem "rr"
+  gem "activerecord-nulldb-adapter"
+  gem "database_cleaner"
 end

@@ -1,4 +1,4 @@
-require_relative 'exhibit'
+# require_relative 'exhibit'
 
 class TextPostExhibit < Exhibit
   def render_body

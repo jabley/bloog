@@ -1,11 +1,17 @@
-require_relative "../spec_helper_lite"
-require_relative "../../app/models/post"
-
+require_relative "../spec_helper_nulldb"
 
 describe Post do
+  include SpecHelpers
   before do
+    setup_nulldb
     @it = Post.new
+    @ar = @it
   end
+
+  after do
+    teardown_nulldb
+  end
+
   it "starts with blank attributes" do
     @it.title.must_be_nil
     @it.body.must_be_nil
@@ -23,11 +29,6 @@ describe Post do
     @it.blog = blog
     @it.blog.must_equal blog
   end
-  it "supports setting attributes in the initializer" do
-    it = Post.new(title: "mytitle", body: "mybody")
-    it.title.must_equal "mytitle"
-    it.body.must_equal "mybody"
-  end
   describe "#publish" do
     before do
       @blog = MiniTest::Mock.new
@@ -43,6 +44,10 @@ describe Post do
     end
     describe "given an invalid post" do
       before do @it.title = nil end
+
+      before do
+        stub(@ar).valid? {false}
+      end
 
       it "won't add the post to the blog" do
         dont_allow(@blog).add_entry(@it)
